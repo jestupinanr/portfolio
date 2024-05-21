@@ -1,0 +1,63 @@
+---
+import Card from "./Card.astro";
+import trufExample from "../assets/images/example-truf.png";
+import winisExample from "../assets/images/example-winis.png";
+import trufAdmin from "../assets/images/example-truf-admin.png";
+import gws from "../assets/images/example-gws.png";
+import ebloqs from "../assets/images/example-ebloqs.png";
+import brandforce from "../assets/images/example-brandforce.png";
+
+---
+<div class="flex flex-col gap-7 py-8 px-10">
+  <h3 class="text-5xl text-secondary text-center font-bold">Proyectos</h3>
+  <div class="flex gap-5">
+    <Card
+      title="TRUF"
+      hrefImage={trufExample}
+      tools={['react', 'typescript', 'nodejs', 'tailwind', 'express', 'mysql', 'aws']}
+      description="Ecommerce de venta de alimentos para mascotas"
+      className="w-1/3"
+    />
+    <Card
+      title="TRUF ADMIN"
+      hrefImage={trufAdmin}
+      tools={['react', 'typescript', 'nodejs', 'tailwind', 'express', 'mysql', 'aws']}
+      description="ERP control del ecommerce de TRUF"
+      className="w-1/3"
+      type="small"
+    />
+    <Card
+      title="EBLOQS"
+      hrefImage={ebloqs}
+      tools={['nextjs', 'typescript']}
+      description="Landing page de aplicación "
+      className="w-1/3"
+    />
+  </div>
+  <div class="flex gap-5">
+    <Card
+      title="WINIS"
+      hrefImage={winisExample}
+      tools={['nextjs', 'typescript', 'phaser']}
+      description="Juego de construir la torre mas alta a base de cubos “Winis”"
+      className="w-1/3"
+    />
+    <Card
+      title="GWS"
+      hrefImage={gws}
+      tools={['react', 'typescript', 'nodejs', 'tailwind', 'nestjs', 'sql', 'aws']}
+      description="ERP para Global Wine"
+      className="w-1/3"
+      type="small"
+    />
+    <Card
+      title="BRANDFORCE"
+      hrefImage={brandforce}
+      tools={['nextjs', 'typescript', 'nodejs', 'tailwind', 'nestjs', 'mysql', 'aws', 'openia']}
+      description="Herramienta interna para mejorar proceso de el area de Marketing"
+      className="w-1/3"
+      type="small"
+    />
+   
+  </div>
+</div>

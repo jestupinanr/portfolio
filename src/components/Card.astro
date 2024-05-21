@@ -1,0 +1,127 @@
+---
+// Importar los recursos necesarios
+import { Image } from 'astro:assets';
+import ReactIcon from '../assets/icons/react.svg';
+import Aws from '../assets/icons/aws.svg';
+import Express from '../assets/icons/express.svg';
+import Mysql from '../assets/icons/mysql.svg';
+import Nestjs from '../assets/icons/nestjs.svg';
+import Nextjs from '../assets/icons/nextjs.svg';
+import Nodejs from '../assets/icons/nodejs.svg';
+import Phaser from '../assets/icons/phaser.svg';
+import sql from '../assets/icons/sql.svg';
+import tailwind from '../assets/icons/tailwind.svg';
+import typescript from '../assets/icons/typescript.svg';
+import Openia from '../assets/icons/openia.svg';
+
+
+type Tools = "react" | "aws" | "express" | "mysql" | "nestjs" | "nextjs" | "nodejs" | "phaser" | "sql" | "tailwind" | "typescript" | "openia" ;
+
+interface Props {
+	title: string;
+	tools: Tools[];
+	hrefImage: ImageMetadata;
+  urlPhone?: ImageMetadata;
+  description: string;
+  className?: string;
+  type?: 'small' | 'big'
+}
+
+const { hrefImage, title, tools, urlPhone, description, className, type } = Astro.props;
+
+const selectImage = (tool: Tools) => {
+  switch (tool) {
+    case 'aws':
+      return Aws;
+    case 'express':
+      return Express;
+    case 'mysql':
+      return Mysql;
+    case 'nestjs':
+      return Nestjs;
+    case 'nextjs':
+      return Nextjs;
+    case 'nodejs':
+      return Nodejs;
+    case 'phaser':
+      return Phaser;
+    case 'react':
+      return ReactIcon;
+    case 'sql':
+      return sql;
+    case 'tailwind':
+      return tailwind;
+    case 'typescript':
+      return typescript;
+    case 'openia':
+      return Openia;
+    default:
+      return ReactIcon;
+  }
+}
+---
+
+<style>
+.inner-shadow {
+  position: relative;
+}
+.inner-shadow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 -46px 35px rgb(255 171 0 / 13%);
+  z-index: 10; /* Asegura que esté encima de los demás contenidos */
+  pointer-events: none; /* Permite interactuar con los elementos debajo de la sombra */
+}
+</style>
+
+<div class={`bg-gray rounded-[20px] pt-8 max-h-[320px] lg:max-h-[550px] w-full overflow-x-hidden
+	overflow-y-hidden relative cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out
+	hover:scale-y-[1.01] group ${className} inner-shadow drop-shadow flex flex-col ${type === 'small' ? 'items-end': 'items-center'} `}
+  >
+	<p class={`font-normal text-3xl lg:text-4xl leading-tight w-full text-center
+		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-white
+    `}
+	>
+	  {title}
+	</p>
+  <p class={`font-normal text-base leading-tight w-full text-center
+		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-[#9E9E9E]
+    `}
+	>
+	  {description}
+	</p>
+	<div class="w-full flex justify-end gap-2 pr-7">
+	  {tools.map((tool) => {
+      const imageUrl = selectImage(tool);
+      return (
+        <div class={`w-6 h-6 lg:w-9 lg:h-9 rounded-full bg-white flex justify-center items-center animate-hide-in-up opacity-0
+          group-hover:animate-fade-in-up group-hover:opacity-100 z-10 delay-1000
+        `}>
+          <Image
+            src={imageUrl}
+            alt="React icon"
+            class="w-4 h-4 lg:w-6 lg:h-6"
+          />
+        </div>
+      )
+    })}
+	</div>
+	<Image
+	  src={hrefImage}
+	  alt={title}
+	  class={`relative delay-300 z-0 ${type === 'small' ? 'w-72' : 'w-[30rem]'}  h-60
+	  transform transition duration-300 ease-in-out group-hover:translate-y-4`}
+	/>
+  {urlPhone && (
+    <Image
+      src={urlPhone}
+      alt={title}
+      class={`hidden lg:block absolute bottom-0 -left-0 w-auto h-full max-h-[14rem] z-0
+      transform transition duration-300 ease-in-out group-hover:translate-y-4`}
+    />
+  )}
+</div>

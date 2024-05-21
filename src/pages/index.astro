@@ -1,0 +1,75 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Banner from "../components/Banner.astro";
+import Aboutme from "../components/Aboutme.astro";
+import Projects from "../components/Projects.astro";
+
+---
+
+<Layout title="Inicio">
+  <main class="flex flex-col pb-24">
+    <Banner />
+    <Aboutme />
+    <Projects />
+
+    <!-- <div class="flex flex-col gap-14 lg:gap-36">
+      <div class="flex flex-col lg:flex-row gap-14 justify-between px-9">
+        <Card
+          title="TRUF ADMIN"
+          hrefImage={trufAdmin}
+          tools={['react', 'typescript', 'nodejs', 'tailwind', 'express', 'mysql', 'aws']}
+          type="small"
+          color="bg-purple"
+          typeApp="ERP"
+        />
+        <Card
+          title="TRUF"
+          hrefImage={truf}
+          tools={['react', 'typescript', 'nodejs', 'tailwind', 'express', 'mysql', 'aws']}
+          type="big"
+          color="bg-orange"
+          urlPhone={trufPhone}
+          typeApp="Ecommerce"
+        />
+      </div>
+      <div class="flex flex-col lg:flex-row gap-14 justify-between px-9">
+        <Card
+          title="WINIS GAME"
+          hrefImage={winis}
+          tools={['nextjs', 'typescript', 'phaser']}
+          type="big"
+          color="bg-blue"
+          urlPhone={winisPhone}
+          typeApp="Juegos"
+        />
+        <Card
+          title="GWS"
+          hrefImage={gws}
+          tools={['react', 'typescript', 'nodejs', 'tailwind', 'nestjs', 'sql', 'aws']}
+          type="small"
+          color="bg-purple"
+          typeApp="ERP"
+        />
+      </div>
+      <div class="flex flex-col lg:flex-row gap-14 justify-between px-9">
+        <Card
+          title="BRANDFORCE"
+          hrefImage={brandforce}
+          tools={['nextjs', 'typescript', 'nodejs', 'tailwind', 'nestjs', 'mysql', 'aws', 'openia']}
+          type="small"
+          color="bg-black"
+          typeApp="IA"
+        />
+        <Card
+          title="EBLOQS"
+          hrefImage={ebloqs}
+          tools={['nextjs', 'typescript']}
+          type="big"
+          color="bg-white"
+          urlPhone={ebloqsPhone}
+          typeApp="Landing Page"
+        />
+      </div>
+    </div> -->
+  </main>
+</Layout>

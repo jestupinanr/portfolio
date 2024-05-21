@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import bannerPhoto from '../assets/images/banner-photo.webp';
+---
+<!-- <section
+  class="
+    relative max-w-full overflow-hidden rounded-2xl text-white duration-500 ease-in
+    [transition-property:_--color-beige,_--color-white,_--color-green300] 
+    after:absolute after:-left-[30%] after:-top-[80%] after:h-[80%] after:w-[60%] after:origin-[60%] 
+    after:rounded-3xl after:bg-gradient-to-br after:from-[--color-a] 
+    after:to-[--color-b] after:blur-[200px] after:brightness-125 after:animate-blob-reverse
+    before:absolute before:-right-[40%] before:-top-[10%]
+    before:h-[60%] before:w-[70%] before:origin-[60%] before:animate-blob before:rounded-3xl before:bg-gradient-to-br 
+    before:from-[--color-beige] before:to-[--color-green300] before:blur-[200px] before:brightness-125
+    max-h-[100vh] w-screen pb-11 lg:pb-36"
+> -->
+<section
+  class="
+    max-w-full overflow-hidden rounded-2xl
+    max-h-[100vh] w-screen grid grid-cols-2"
+>
+  <div class="flex flex-col pt-28 pl-14 pr-10 gap-16 pb-11">
+    <div class="flex flex-col gap-6">
+      <h1 class="font-bold text-4xl lg:text-5xl text-secondary">
+        Soy Juan Diego.
+      </h1>
+      <p class="text-4xl lg:text-5xl text-white font-bold leading-[5.25rem]">
+        Desarrollador Web full stack.
+      </p>
+    </div>
+    <h2 class="text-base lg:text-xl text-white text-center">
+      Un apasionado desarrollador web full-stack que construye soluciones web innovadoras y escalables.
+    </h2>
+    <div class="flex justify-center items-center">
+      <button class="border border-secondary flex justify-center items-center text-secondary py-3 px-9 w-auto">
+        Contacto
+      </button>
+    </div>
+  </div>
+  <div class="bg-secondary flex justify-center items-end">
+    <Image
+      src={bannerPhoto}
+      alt="banner"
+      class="w-52 h-52 lg:w-[27rem] lg:h-[30rem]"
+    />
+  </div>
+</section>
