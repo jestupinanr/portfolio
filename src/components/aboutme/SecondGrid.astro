@@ -1,0 +1,111 @@
+---
+import { Image } from "astro:assets";
+import linkedin from "../../assets/icons/linkedin-v2.svg";
+import github from "../../assets/icons/github-v2.svg";
+import ReactIcon from '../../assets/icons/react.svg';
+import Aws from '../../assets/icons/aws.svg';
+import Express from '../../assets/icons/express.svg';
+import Mysql from '../../assets/icons/mysql.svg';
+import Nestjs from '../../assets/icons/nestjs.svg';
+import Nextjs from '../../assets/icons/nextjs.svg';
+import Nodejs from '../../assets/icons/nodejs.svg';
+import Phaser from '../../assets/icons/phaser.svg';
+import sql from '../../assets/icons/sql.svg';
+import tailwind from '../../assets/icons/tailwind.svg';
+import typescript from '../../assets/icons/typescript.svg';
+import Openia from '../../assets/icons/openia.svg';
+import Html from '../../assets/icons/html.svg';
+import Css from '../../assets/icons/css.svg';
+import Javascript from '../../assets/icons/javascript.svg';
+
+
+type Tools = "react" | "aws" | "express" | "mysql" | "nestjs" | "nextjs" | "nodejs" | "phaser" | "sql" | "tailwind" | "typescript" | "openia" | "html" | "css" | "javascript";
+
+const toolsArray: Tools[] = ['aws', 'express', 'mysql', 'nestjs', 'nextjs', 'nodejs', 'openia', 'phaser', 'react', 'sql', 'tailwind', 'typescript', 'html', 'css', 'javascript']
+
+const selectImage = (tool: Tools) => {
+  switch (tool) {
+    case 'aws':
+      return Aws;
+    case 'express':
+      return Express;
+    case 'mysql':
+      return Mysql;
+    case 'nestjs':
+      return Nestjs;
+    case 'nextjs':
+      return Nextjs;
+    case 'nodejs':
+      return Nodejs;
+    case 'phaser':
+      return Phaser;
+    case 'react':
+      return ReactIcon;
+    case 'sql':
+      return sql;
+    case 'tailwind':
+      return tailwind;
+    case 'typescript':
+      return typescript;
+    case 'openia':
+      return Openia;
+    case 'html':
+      return Html;
+    case 'css':
+      return Css;
+    case 'javascript':
+      return Javascript;
+    default:
+      return ReactIcon;
+  }
+}
+
+---
+
+<div class="flex flex-col gap-7">
+  <div class="bg-primary rounded-[20px] drop-shadow">
+    <div class="flex items-center justify-center py-11 gap-7">
+      <div class="bg-gray flex px-3 py-[0.30rem] items-center rounded-[5px] gap-3">
+        <div class="bg-[#5E5E5E] rounded-[10px]">
+          <Image
+            src={linkedin}
+            alt="linkedin"
+            class="w-9 h-9"
+          />
+        </div>
+        <p class="text-[#9E9E9E] text-[15px]">
+          LinkedIn
+        </p>
+      </div>
+      <div class="bg-gray flex px-3 py-1 items-center rounded-[5px] gap-3">
+        <div class="bg-[#5E5E5E] rounded-[10px]">
+          <Image
+            src={github}
+            alt="github"
+            class="w-9 h-9"
+          />
+        </div>
+        <p class="text-[#9E9E9E] text-[15px]">
+          Github
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- tools -->
+  <div class="grid grid-cols-5 gap-6">
+    {toolsArray.map((tool) => {
+      const imageUrl = selectImage(tool);
+      return (
+        <div class="bg-primary rounded-[20px] flex justify-center items-center py-4 px-1 drop-shadow">
+          <Image
+            src={imageUrl}
+            alt="React icon"
+            class="w-4 h-4 lg:w-9 lg:h-9"
+          />
+        </div>
+      );
+      }
+    )}
+  </div>
+</div>
