@@ -67,8 +67,8 @@ const selectImage = (tool: Tools) => {
     <div class="flex items-center justify-center py-11 gap-7">
       <div class="bg-gray flex px-3 py-[0.30rem] items-center rounded-[5px] gap-3">
         <div class="bg-[#5E5E5E] rounded-[10px]">
-          <Image
-            src={linkedin}
+          <img
+            src={linkedin.src}
             alt="linkedin"
             class="w-9 h-9"
           />
@@ -79,8 +79,8 @@ const selectImage = (tool: Tools) => {
       </div>
       <div class="bg-gray flex px-3 py-1 items-center rounded-[5px] gap-3">
         <div class="bg-[#5E5E5E] rounded-[10px]">
-          <Image
-            src={github}
+          <img
+            src={github.src}
             alt="github"
             class="w-9 h-9"
           />
@@ -98,8 +98,8 @@ const selectImage = (tool: Tools) => {
       const imageUrl = selectImage(tool);
       return (
         <div class="bg-primary rounded-[20px] flex justify-center items-center py-4 px-1 drop-shadow">
-          <Image
-            src={imageUrl}
+          <img
+            src={imageUrl.src}
             alt="React icon"
             class="w-4 h-4 lg:w-9 lg:h-9"
           />

@@ -101,8 +101,8 @@ const selectImage = (tool: Tools) => {
         <div class={`w-6 h-6 lg:w-9 lg:h-9 rounded-full bg-white flex justify-center items-center animate-hide-in-up opacity-0
           group-hover:animate-fade-in-up group-hover:opacity-100 z-10 delay-1000
         `}>
-          <Image
-            src={imageUrl}
+          <img
+            src={imageUrl.src}
             alt="React icon"
             class="w-4 h-4 lg:w-6 lg:h-6"
           />
@@ -110,15 +110,15 @@ const selectImage = (tool: Tools) => {
       )
     })}
 	</div>
-	<Image
-	  src={hrefImage}
+	<img
+	  src={hrefImage.src}
 	  alt={title}
 	  class={`relative delay-300 z-0 ${type === 'small' ? 'w-72' : 'w-[30rem]'}  h-60
 	  transform transition duration-300 ease-in-out group-hover:translate-y-4`}
 	/>
   {urlPhone && (
-    <Image
-      src={urlPhone}
+    <img
+      src={urlPhone.src}
       alt={title}
       class={`hidden lg:block absolute bottom-0 -left-0 w-auto h-full max-h-[14rem] z-0
       transform transition duration-300 ease-in-out group-hover:translate-y-4`}
