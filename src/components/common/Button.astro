@@ -1,10 +1,29 @@
 ---
 interface Props {
   text: string;
+  href?: string;
+  variant?: "outline" | "solid";
+  external?: boolean;
+  download?: boolean;
 }
 
-const { text } = Astro.props;
+const { text, href, variant = "outline", external = false, download = false } = Astro.props;
+const base =
+  "border border-secondary flex justify-center items-center py-3 px-9 w-auto text-center transition hover:opacity-80";
+const styles = variant === "solid" ? "bg-secondary text-[#212128] font-bold" : "text-secondary";
 ---
-<button class="border border-secondary flex justify-center items-center text-secondary py-3 px-9 w-auto">
-  {text}
-</button>
+{href ? (
+  <a
+    href={href}
+    class={`${base} ${styles}`}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+    download={download ? "" : undefined}
+  >
+    {text}
+  </a>
+) : (
+  <button type="button" class={`${base} ${styles} opacity-50 cursor-not-allowed`} disabled>
+    {text}
+  </button>
+)}

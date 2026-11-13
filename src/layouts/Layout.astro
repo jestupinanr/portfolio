@@ -2,22 +2,40 @@
 import '@fontsource/poppins';
 import '@fontsource/poppins/800.css';
 import Navbar from '../components/Navbar';
+import { profile } from '../data/profile';
+import bannerPhoto from '../assets/images/profile.webp';
 interface Props {
-	title: string;
+	title?: string;
+	description?: string;
 }
 
-const { title } = Astro.props;
+const { title = profile.siteTitle, description = profile.siteDescription } = Astro.props;
+const ogImage = new URL(bannerPhoto.src, Astro.url).toString();
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:url" content={Astro.url.toString()} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script is:inline>
+			try {
+				var t = localStorage.getItem('theme');
+				document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+			} catch (e) {
+				document.documentElement.dataset.theme = 'dark';
+			}
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -26,6 +44,18 @@ const { title } = Astro.props;
 </html>
 <style is:global>
 	:root {
+		--c-primary: 33 33 40;
+		--c-gray: 52 53 58;
+		--c-fg: 255 255 255;
+		--c-muted: 189 189 189;
+		--c-chip: 52 53 58;
+		--c-inset: 28 28 30;
+		--c-nav: 22 22 22;
+		--c-nav-item: 33 33 33;
+		--page-bg: #212128;
+		--grad-from: #FFFFFF;
+		--grad-to: #999999;
+		--edge: rgba(255, 255, 255, 0.09);
 		--accent: 136, 58, 234;
 		--accent-light: 224, 204, 250;
 		--accent-dark: 49, 10, 101;
@@ -37,10 +67,24 @@ const { title } = Astro.props;
 		--color-background: hsla(36, 31%, 90%, 1);
 
 	}
+	:root[data-theme='light'] {
+		--c-primary: 255 255 255;
+		--c-gray: 229 231 235;
+		--c-fg: 24 24 27;
+		--c-muted: 82 82 91;
+		--c-chip: 229 231 235;
+		--c-inset: 244 244 245;
+		--c-nav: 255 255 255;
+		--c-nav-item: 229 231 235;
+		--page-bg: #F4F4F6;
+		--grad-from: #18181B;
+		--grad-to: #52525B;
+		--edge: rgba(0, 0, 0, 0.12);
+	}
 	html {
 		font-family: 'Poppins';
     	/* background: var(--color-background); */
-		background: #212128;
+		background: var(--page-bg);
 	}
 	code {
 		font-family:
@@ -56,7 +100,7 @@ const { title } = Astro.props;
 
 
 	.gradient-text {
-		background: linear-gradient(to bottom, #FFFFFF, #999999);
+		background: linear-gradient(to bottom, var(--grad-from), var(--grad-to));
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
@@ -70,7 +114,7 @@ const { title } = Astro.props;
 		text-fill-color: transparent;
 	}
 	.drop-shadow {
-		box-shadow: 0 -1px 2px rgba(255, 255, 255, 0.09);
+		box-shadow: 0 -1px 2px var(--edge);
 	}
 	
 </style>

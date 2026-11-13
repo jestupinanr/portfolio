@@ -3,14 +3,26 @@ import { useEffect, useRef, useState } from "react";
 export default function Navbar() {
   const componentRef = useRef<HTMLDivElement>(null);
   const [pathName, setPathName] = useState('');
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
-    if (window)
+    if (window) {
       setPathName(window.location.pathname);
+      setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+    }
   }, [])
-  
-  console.log(pathName);
 
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch (e) {
+      // storage unavailable: theme just won't persist
+    }
+  };
+  
   const interpolateScale = (distance: number, maxDistance: number, minScale: number, maxScale: number) => {
     if (distance > maxDistance) return minScale;
     if (distance < 0) return maxScale;
@@ -69,16 +81,16 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed bottom-3 bg-[#161616] bg-opacity-90 rounded-full left-[50%] translate-x-[-50%] overflow-x-auto max-w-[80vw] lg:overflow-x-clip
+      className={`fixed bottom-3 bg-nav text-muted bg-opacity-90 rounded-full left-[50%] translate-x-[-50%] overflow-x-auto max-w-[80vw] lg:overflow-x-clip
         flex gap-4 z-40 px-3 py-[6px] transition-transform duration-300 hover:translate-y-[-10px] hover:scale-110 drop-shadow`}
       onMouseMove={handleMouseMove}
       onMouseLeave={resetScale}
       ref={componentRef}
     >
       <ul className="flex gap-2">
-        <li className={`relative rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer flex-col gap-2`}>
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-home" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className={`relative rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer flex-col gap-2`}>
+          <a href="#home" aria-label="Home">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-home" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M5 12l-2 0l9 -9l9 9l-2 0" />
             <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
@@ -87,9 +99,9 @@ export default function Navbar() {
           </a>
           {pathName === '/' && <span className="absolute w-1 h-1 rounded-full bg-gray -bottom-[5px] opacity-60"></span>}
         </li>
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-briefcase" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="#projects" aria-label="Projects">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-briefcase" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
             <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
@@ -98,18 +110,18 @@ export default function Navbar() {
           </svg>
           </a>
         </li>
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-user" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="#about" aria-label="About me">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-user" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
             <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
           </svg>
           </a>
         </li>
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-address-book" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="#contact" aria-label="Contact">
+            <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-address-book" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
               <path d="M20 6v12a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2z" />
               <path d="M10 16h6" />
@@ -124,9 +136,9 @@ export default function Navbar() {
       <div className="border-r border-gray opacity-40 my-2"></div>
       {/* second options */}
       <ul className="flex gap-2">
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-linkedin" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="https://www.linkedin.com/in/juan-diego-estupi%C3%B1an-118481174/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-linkedin" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z" />
             <path d="M8 11l0 5" />
@@ -136,17 +148,17 @@ export default function Navbar() {
           </svg>
           </a>
         </li>
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-github" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="https://github.com/jestupinanr" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-brand-github" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
           </svg>
           </a>
         </li>
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-mail" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <a href="mailto:Juan1diego3@gmail.com" aria-label="Email">
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-mail" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
             <path d="M3 7l9 6l9 -6" />
@@ -156,13 +168,26 @@ export default function Navbar() {
       </ul>
       <div className="border-r border-gray opacity-40 my-2"></div>
       <ul className="flex gap-2">
-        <li className="rounded-full bg-[#212121] drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
-          <a href="/">
-          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-moon" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="#7e7e7e" fill="none" strokeLinecap="round" strokeLinejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-          </svg>
-          </a>
+        <li className="rounded-full bg-nav-item drop-shadow w-10 h-10 flex justify-center items-center cursor-pointer">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+            className="w-full h-full flex justify-center items-center rounded-full"
+          >
+            {theme === 'dark' ? (
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+              </svg>
+            )}
+          </button>
         </li>
       </ul>
     </nav>

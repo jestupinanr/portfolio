@@ -1,58 +1,53 @@
 ---
-import { Image } from "astro:assets";
-import profile from "../../assets/images/profile.webp";
+import profileImg from "../../assets/images/profile.webp";
 import Button from "../common/Button.astro";
+import { profile, contact, stats } from "../../data/profile";
+
+const whatsappHref = contact.whatsapp || undefined;
 ---
 
 <div class="flex flex-col gap-5">
-    <!-- first column -->
-    <div class="grid grid-cols-3 gap-5">
-      <div class="bg-primary rounded-[20px] flex flex-col justify-center items-center text-white font-extrabold relative py-2 drop-shadow">
-        <p class="text-[64px] gradient-text">5</p>
-        <span class="text-secondary text-[64px] gradient-text-secondary absolute left-4 -top-5">+</span>
-        <span>Experiencia</span>
-      </div>
-      <div class="bg-primary rounded-[20px] flex flex-col justify-center items-center text-white font-extrabold relative py-2 drop-shadow">
-        <p class="text-[64px] gradient-text">5</p>
-        <span class="text-secondary text-[64px] gradient-text-secondary absolute left-4 -top-5">+</span>
-        <span>Experiencia</span>
-      </div>
-      <div class="bg-primary rounded-[20px] flex flex-col justify-center items-center text-white font-extrabold relative py-2 drop-shadow">
-        <p class="text-[64px] gradient-text">5</p>
-        <span class="text-secondary text-[64px] gradient-text-secondary absolute left-4 -top-5">+</span>
-        <span>Experiencia</span>
-      </div>
+    <!-- stats -->
+    <div class="grid grid-cols-3 gap-3 lg:gap-5">
+      {stats.map((stat) => (
+        <div class="bg-primary rounded-[20px] flex flex-col justify-center items-center text-fg font-extrabold relative py-3 px-1 drop-shadow text-center">
+          <p class={`gradient-text ${stat.small ? "text-xl lg:text-2xl py-5" : "text-[48px] lg:text-[64px]"}`}>{stat.value}</p>
+          <span class="text-[10px] lg:text-xs leading-tight">{stat.label}</span>
+        </div>
+      ))}
     </div>
     <!-- my information -->
     <div class="bg-primary rounded-[20px] drop-shadow py-5 flex flex-col px-5 gap-5">
       <div class="flex gap-3">
         <img
-          src={profile.src}
-          alt="profile"
+          src={profileImg.src}
+          alt={`Photo of ${profile.name}`}
           class="w-32 h-32 rounded-full"
         />
         <div class="flex flex-col gap-4 justify-center">
-          <div class="flex bg-[#34353A] rounded-md gap-2 px-2 py-1 justify-center items-center">
+          <div class="flex bg-chip rounded-md gap-2 px-2 py-1 justify-center items-center">
             <div class="w-2 h-2 bg-green rounded-full"></div>
-            <span class="text-[8px] text-white font-normal">Disponible para trabajar</span>
+            <span class="text-[10px] text-fg font-normal">{profile.status}</span>
           </div>
           <div class="flex flex-col gap-2">
-            <p class="text-white text-xs">Juan Diego Estupiñan</p>
-            <p class="text-[#9E9E9E] text-[10px]">Desarrollador full-stack</p>
+            <p class="text-fg text-sm">{profile.name}</p>
+            <p class="text-muted text-xs">{profile.role}</p>
           </div>
         </div>
       </div>
-      <div class="bg-[#1C1C1E] rounded-[10px] w-full py-2 px-4 flex gap-4">
-        <div class="bg-gray rounded-[5px] font-normal text-white text-[10px] px-2">
-          <span>Ingeniero de software</span>
-        </div>
-        <div class="bg-gray rounded-[5px] font-normal text-white text-[10px] px-2">
-          <span>Colombia</span>
-        </div>
+      <div class="bg-inset rounded-[10px] w-full py-2 px-4 flex flex-wrap gap-2 lg:gap-4">
+        {profile.tags.map((tag) => (
+          <div class="bg-chip rounded-[5px] font-normal text-fg text-[10px] px-2 py-0.5">
+            <span>{tag}</span>
+          </div>
+        ))}
       </div>
-      <div class="grid grid-cols-2 gap-5">
-        <Button text="Whatsapp" />
-        <Button text="Email" />
+      <div id="contact" class="grid grid-cols-2 gap-3 scroll-mt-4">
+        <Button text="WhatsApp" href={whatsappHref} external />
+        <Button text="Email" href={`mailto:${contact.email}`} />
+        <div class="col-span-2">
+          <Button text="Download CV" href={contact.cv} variant="solid" download />
+        </div>
       </div>
     </div>
   </div>
