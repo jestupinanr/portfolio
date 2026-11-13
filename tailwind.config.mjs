@@ -14,10 +14,16 @@ export default {
       // 'white': '#FFFFFF',
       // 'black': '#1C1C1C',
 
-      'primary': '#212128',
+      'primary': 'rgb(var(--c-primary) / <alpha-value>)',
+      'gray': 'rgb(var(--c-gray) / <alpha-value>)',
+      'fg': 'rgb(var(--c-fg) / <alpha-value>)',
+      'muted': 'rgb(var(--c-muted) / <alpha-value>)',
+      'chip': 'rgb(var(--c-chip) / <alpha-value>)',
+      'inset': 'rgb(var(--c-inset) / <alpha-value>)',
+      'nav': 'rgb(var(--c-nav) / <alpha-value>)',
+      'nav-item': 'rgb(var(--c-nav-item) / <alpha-value>)',
       'secondary': '#FFAB00',
       'white': '#FFFFFF',
-      'gray': '#34353A',
       'green': '#39CB36'
     },
 		extend: {

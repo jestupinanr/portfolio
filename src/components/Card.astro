@@ -1,64 +1,25 @@
 ---
-// Importar los recursos necesarios
-import { Image } from 'astro:assets';
-import ReactIcon from '../assets/icons/react.svg';
-import Aws from '../assets/icons/aws.svg';
-import Express from '../assets/icons/express.svg';
-import Mysql from '../assets/icons/mysql.svg';
-import Nestjs from '../assets/icons/nestjs.svg';
-import Nextjs from '../assets/icons/nextjs.svg';
-import Nodejs from '../assets/icons/nodejs.svg';
-import Phaser from '../assets/icons/phaser.svg';
-import sql from '../assets/icons/sql.svg';
-import tailwind from '../assets/icons/tailwind.svg';
-import typescript from '../assets/icons/typescript.svg';
-import Openia from '../assets/icons/openia.svg';
-
-
-type Tools = "react" | "aws" | "express" | "mysql" | "nestjs" | "nextjs" | "nodejs" | "phaser" | "sql" | "tailwind" | "typescript" | "openia" ;
+import { toolIcons } from '../data/icons';
+import { toolLabels, type Tool } from '../data/profile';
 
 interface Props {
-	title: string;
-	tools: Tools[];
-	hrefImage: ImageMetadata;
+  title: string;
+  tools: Tool[];
+  hrefImage?: ImageMetadata;
   urlPhone?: ImageMetadata;
   description: string;
   className?: string;
-  type?: 'small' | 'big'
+  type?: 'small' | 'big';
+  href?: string;
+  company?: string;
+  isPrivate?: boolean;
+  textOnly?: boolean;
 }
 
-const { hrefImage, title, tools, urlPhone, description, className, type } = Astro.props;
-
-const selectImage = (tool: Tools) => {
-  switch (tool) {
-    case 'aws':
-      return Aws;
-    case 'express':
-      return Express;
-    case 'mysql':
-      return Mysql;
-    case 'nestjs':
-      return Nestjs;
-    case 'nextjs':
-      return Nextjs;
-    case 'nodejs':
-      return Nodejs;
-    case 'phaser':
-      return Phaser;
-    case 'react':
-      return ReactIcon;
-    case 'sql':
-      return sql;
-    case 'tailwind':
-      return tailwind;
-    case 'typescript':
-      return typescript;
-    case 'openia':
-      return Openia;
-    default:
-      return ReactIcon;
-  }
-}
+const { hrefImage, title, tools, urlPhone, description, className, type, href, company, isPrivate, textOnly } = Astro.props;
+const Wrapper = href ? 'a' : 'div';
+const wrapperProps = href ? { href, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${title} (opens in a new tab)` } : {};
+const meta = [company, ...tools.slice(0, 3).map((t) => toolLabels[t])].filter(Boolean).join(' · ');
 ---
 
 <style>
@@ -78,50 +39,46 @@ const selectImage = (tool: Tools) => {
 }
 </style>
 
-<div class={`bg-gray rounded-[20px] pt-8 max-h-[320px] lg:max-h-[550px] w-full overflow-x-hidden
-	overflow-y-hidden relative cursor-pointer hover:shadow-2xl transition duration-300 ease-in-out
+<Wrapper {...wrapperProps} class={`bg-gray rounded-[20px] pt-8 max-h-[420px] lg:max-h-[550px] ${textOnly ? 'pb-8 !max-h-none lg:col-span-3 px-6' : ''} w-full overflow-x-hidden
+	overflow-y-hidden relative ${href ? 'cursor-pointer' : ''} hover:shadow-2xl transition duration-300 ease-in-out
 	hover:scale-y-[1.01] group ${className} inner-shadow drop-shadow flex flex-col ${type === 'small' ? 'items-end': 'items-center'} `}
   >
-	<p class={`font-normal text-3xl lg:text-4xl leading-tight w-full text-center
-		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-white
-    `}
+	<p class="font-normal text-3xl lg:text-4xl leading-tight w-full text-center
+		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-fg"
 	>
 	  {title}
+	  {isPrivate && <span class="ml-2 align-middle text-[10px] border border-muted text-muted rounded px-1.5 py-0.5">Private project</span>}
 	</p>
-  <p class={`font-normal text-base leading-tight w-full text-center
-		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-[#9E9E9E]
-    `}
+  <p class="font-normal text-base leading-tight w-full text-center px-3
+		transform transition delay-150 duration-300 ease-in-out group-hover:-translate-y-4 text-muted"
 	>
 	  {description}
 	</p>
-	<div class="w-full flex justify-end gap-2 pr-7">
-	  {tools.map((tool) => {
-      const imageUrl = selectImage(tool);
-      return (
-        <div class={`w-6 h-6 lg:w-9 lg:h-9 rounded-full bg-white flex justify-center items-center animate-hide-in-up opacity-0
-          group-hover:animate-fade-in-up group-hover:opacity-100 z-10 delay-1000
-        `}>
-          <img
-            src={imageUrl.src}
-            alt="React icon"
-            class="w-4 h-4 lg:w-6 lg:h-6"
-          />
-        </div>
-      )
-    })}
+  <p class="text-xs text-muted w-full text-center mt-1">{meta}</p>
+	<div class="w-full flex flex-wrap justify-end gap-2 pr-7 mt-2">
+	  {tools.map((tool) => (
+      <div class="w-6 h-6 lg:w-9 lg:h-9 rounded-full bg-white flex justify-center items-center animate-hide-in-up opacity-0
+        group-hover:animate-fade-in-up group-hover:opacity-100 z-10 delay-1000">
+        <img
+          src={toolIcons[tool].src}
+          alt={toolLabels[tool]}
+          class="w-4 h-4 lg:w-6 lg:h-6"
+        />
+      </div>
+    ))}
 	</div>
-	<img
+	{hrefImage && <img
 	  src={hrefImage.src}
-	  alt={title}
-	  class={`relative delay-300 z-0 ${type === 'small' ? 'w-72' : 'w-[30rem]'}  h-60
+	  alt={`${title} preview`}
+	  class={`relative delay-300 z-0 ${type === 'small' ? 'w-72' : 'w-full max-w-[30rem]'}  h-60
 	  transform transition duration-300 ease-in-out group-hover:translate-y-4`}
-	/>
+	/>}
   {urlPhone && (
     <img
       src={urlPhone.src}
-      alt={title}
-      class={`hidden lg:block absolute bottom-0 -left-0 w-auto h-full max-h-[14rem] z-0
-      transform transition duration-300 ease-in-out group-hover:translate-y-4`}
+      alt=""
+      class="hidden lg:block absolute bottom-0 -left-0 w-auto h-full max-h-[14rem] z-0
+      transform transition duration-300 ease-in-out group-hover:translate-y-4"
     />
   )}
-</div>
+</Wrapper>
